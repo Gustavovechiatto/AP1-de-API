@@ -1,0 +1,33 @@
+
+services:
+  gerenciamento:
+    build: ./gerenciamento
+    container_name: gerenciamento
+    ports:
+      - "5000:5000"
+    networks:
+      - ap2net
+
+  reservas:
+    build: ./reservas
+    container_name: reservas
+    ports:
+      - "5001:5001"
+    depends_on:
+      - gerenciamento
+    networks:
+      - ap2net
+
+  atividades:
+    build: ./atividades
+    container_name: atividades
+    ports:
+      - "5002:5002"
+    depends_on:
+      - gerenciamento
+    networks:
+      - ap2net
+
+networks:
+  ap2net:
+    driver: bridge
