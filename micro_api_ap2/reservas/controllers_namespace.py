@@ -15,7 +15,7 @@ reserva_model = api.model('Reserva', {
 
 @api.route('/', '/<int:id>')
 class ReservaResource(Resource):
-    @api.marshal_list_with(reserva_model)
+    @api.marshal_with(reserva_model)
     def get(self, id=None):
         if id:
             return Reserva.query.get_or_404(id)

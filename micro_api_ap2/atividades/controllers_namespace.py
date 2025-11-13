@@ -1,4 +1,4 @@
-from flask_restx import Namespace, Resource, fields, marshal_with, marshal_list_with
+from flask_restx import Namespace, Resource, fields, marshal_with
 from database import db
 from models import Atividade, Nota
 from flask import request
@@ -23,7 +23,7 @@ nota_model = api.model('Nota', {
 
 @api.route('/')
 class AtividadeList(Resource):
-    @api.marshal_list_with(atividade_model)
+    @api.marshal_with(atividade_model)
     @api.response(200, 'OK')
     def get(self):
         return Atividade.query.all()
@@ -54,6 +54,7 @@ class AtividadeList(Resource):
 @api.route('/<int:id>')
 class AtividadeItem(Resource):
     @api.marshal_with(atividade_model)
+    
     @api.response(200, 'OK')
     def get(self, id):
         return Atividade.query.get_or_404(id)
@@ -82,7 +83,7 @@ class AtividadeItem(Resource):
 # Notas nested under atividades
 @api.route('/<int:atividade_id>/notas')
 class NotasList(Resource):
-    @api.marshal_list_with(nota_model)
+    @api.marshal_with(nota_model)
     @api.response(200, 'OK')
     def get(self, atividade_id):
         a = Atividade.query.get_or_404(atividade_id)
